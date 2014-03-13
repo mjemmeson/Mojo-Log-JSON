@@ -46,6 +46,17 @@
       }
    },
    "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/mjemmeson/Mojo-Log-JSON/issues"
+      },
+      "homepage" : "https://github.com/mjemmeson/Mojo-Log-JSON",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/mjemmeson/Mojo-Log-JSON.git",
+         "web" : "https://github.com/mjemmeson/Mojo-Log-JSON"
+      }
+   },
    "version" : "0.01"
 }
 
