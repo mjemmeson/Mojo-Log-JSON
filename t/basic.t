@@ -17,9 +17,7 @@ like $trap->stderr,
     qr/{"datetime":"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d","level":"debug","message":"Multi\\nline\\nstring/,
     "multi line message ok";
 
-trap {
-    $logger->debug( { message => "Data structure", foo => 'bar' } );
-};
+trap { $logger->debug( { message => "Data structure", foo => 'bar' } ) };
 like $trap->stderr,
     qr/{"datetime":"\d{4}-\d\d-\d\d \d\d:\d\d:\d\d","foo":"bar","level":"debug","message":"Data structure"}/,
     "data structure message ok";
