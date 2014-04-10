@@ -63,13 +63,16 @@ Mojo::Log::JSON - Simple JSON logger
     my $logger = Mojo::Log::JSON->new;
 
     # Customize log file location, minimum log level and default fields
-    my $log = Mojo::Log::JSON->new(    #
+    my $logger = Mojo::Log::JSON->new(    #
         path           => '/var/log/mojo.log',
         level          => 'warn',
         default_fields => {                      #
             datetime => sub { time2iso() },      # default added to log
         },
     );
+
+    # To add extra default field
+    $logger->default_fields->{foo} = "bar";
 
     # Log messages - debug, info, warn, error, fatal (same as Mojo::Log)
 

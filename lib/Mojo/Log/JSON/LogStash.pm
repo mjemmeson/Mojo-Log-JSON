@@ -35,19 +35,25 @@ Mojo::Log::JSON::LogStash - Simple JSON logger to produce LogStash format logs
 
 =head1 SYNOPSIS
 
+    package MyApp;
+
     use Mojo::Log::JSON::LogStash;
 
-    # Log to STDERR
-    my $logger = Mojo::Log::JSON::LogStash->new;
+    sub startup {
+        my $self = shift;
 
-    # Customize log file location, minimum log level and default fields
-    my $log = Mojo::Log::JSON::LogStash->new(    #
-        path           => '/var/log/mojo.log',
-        level          => 'warn',
-        default_fields => {
-            host => 'myhost',
-        },
-    );
+        ...
+
+        open my $handle, '|-',
+            'logstash-forwarder -config=/path/to/logstash-forwarder-config.conf'
+            or die "can't run logstash-forwarder: $!";
+
+        my $logger = Mojo::Log::JSON::LogStash->new( handle => $handle );
+
+        $logger->default_fields->{foo} = "bar";    # add extra default field
+
+        ...
+    }
 
     # Log messages - debug, info, warn, error, fatal (same as Mojo::Log)
 
@@ -56,9 +62,9 @@ Mojo::Log::JSON::LogStash - Simple JSON logger to produce LogStash format logs
     $log->debug( { message => "A data structure", foo => "bar" } );
 
     # The above examples would generate something like the following:
-    {"@timestamp":"2014-03-13T13:15:44.005134Z","level":"debug","message":"A simple string"}
-    {"@timestamp":"2014-03-13T13:15:45.123565Z","level":"debug","message":"A\nmessage\nover\nmultiple\nlines"}
-    {"@timestamp":"2014-03-13T13:15:46.863454Z","foo":"bar","level":"debug","message":"A data structure"}
+    {"@timestamp":"2014-03-13T13:15:44.005134Z","@version":1,"level":"debug","message":"A simple string"}
+    {"@timestamp":"2014-03-13T13:15:45.123565Z","@version":1,"level":"debug","message":"A\nmessage\nover\nmultiple\nlines"}
+    {"@timestamp":"2014-03-13T13:15:46.863454Z","@version":1,"foo":"bar","level":"debug","message":"A data structure"}
 
 =head1 DESCRIPTION
 
@@ -69,9 +75,11 @@ The key C<level> is always added to the data structure, with the value set to
 the level of the log message being emitted.
 
 The required LogStash keys C<@timestamp> and C<@version> are also added to the
-data structure with a value of the current time in UTC in ISO 8601 format, with
-microseconds. This can be altered or other fields can be added via the
-C<default_fields> attribute.
+data structure. C<@timestamp> is set with a value of the current time in UTC in
+ISO 8601 format, with microseconds.
+
+These can be overridden or other fields added via the C<default_fields>
+attributes.
 
 =head1 ATTRIBUTES
 
