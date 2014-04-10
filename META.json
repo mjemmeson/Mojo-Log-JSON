@@ -35,13 +35,20 @@
          }
       },
       "runtime" : {
+         "recommends" : {
+            "JSON::XS" : "0"
+         },
          "requires" : {
+            "JSON" : "0",
+            "Mojolicious" : "0",
+            "Time::HiRes" : "0",
             "perl" : "5.008005"
          }
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.88"
+            "Test::More" : "0",
+            "Test::Trap" : "0"
          }
       }
    },
