@@ -40,7 +40,7 @@ the level of the log message being emitted.
 
 By default the key `datetime` is also added to the data structure with a value
 of the current time in ISO 8601 format. This can be removed or other fields can
-be added via `default_fields`.
+be added via the `default_fields` attribute.
 
 # ATTRIBUTES
 

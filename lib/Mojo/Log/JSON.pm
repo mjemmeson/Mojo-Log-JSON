@@ -2,29 +2,43 @@ package Mojo::Log::JSON;
 
 use Mojo::Base 'Mojo::Log';
 
-use HTTP::Date qw/ time2iso /;
-use JSON qw/ to_json /;
+use JSON;
 
 our $VERSION = '0.01';
 
-has default_fields => sub { { datetime => sub { time2iso() } } };
 has codec => sub { JSON->new->indent(0)->utf8->canonical };
+
+has default_fields => sub {
+    {   datetime => sub {
+
+            my ( $sec, $min, $hour, $mday, $mon, $year ) = gmtime();
+            sprintf(
+                "%04d-%02d-%02d %02d:%02d:%02d",
+                $year + 1900,
+                $mon + 1, $mday, $hour, $min, $sec
+            );
+        },
+    };
+};
 
 sub format {
     my ( $self, $level, @lines ) = @_;
 
     my %msg = (
         (   map {
+
                 my $value = $self->default_fields->{$_};
+
                 $_ => ref $value eq 'CODE' ? $value->() : $value;
+
             } keys %{ $self->default_fields }
         ),
 
         level => $level,
 
-        ref $lines[0]       #
-        ? %{ $lines[0] }    #
-        : ( message => join( "\n", @lines ) ),
+        ref $lines[0]       # data structure?
+        ? %{ $lines[0] }    #  multiple keys
+        : ( message => join( "\n", @lines ) ),    # single 'message' key
 
     );
 
@@ -64,9 +78,9 @@ Mojo::Log::JSON - Simple JSON logger
     $log->debug( { message => "A data structure", foo => "bar" } );
 
     # The above examples would generate something like the following:
-    {"datetime":"YYYY-MM-DD HH:mm:ss","level":"debug","message":"A simple string"}
+    {"datetime":"2014-03-13 13:15:44","level":"debug","message":"A simple string"}
     {"datetime":"2014-03-13 13:15:45","level":"debug","message":"A\nmessage\nover\nmultiple\nlines"}
-    {"datetime":"2014-03-13 13:16:32","foo":"bar","level":"debug","message":"A data structure"}
+    {"datetime":"2014-03-13 13:15:46","foo":"bar","level":"debug","message":"A data structure"}
 
 =head1 DESCRIPTION
 
@@ -79,7 +93,7 @@ the level of the log message being emitted.
 
 By default the key C<datetime> is also added to the data structure with a value
 of the current time in ISO 8601 format. This can be removed or other fields can
-be added via C<default_fields>.
+be added via the C<default_fields> attribute.
 
 =head1 ATTRIBUTES
 

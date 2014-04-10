@@ -1,7 +1,11 @@
 requires 'perl', '5.008005';
 
-# requires 'Some::Module', 'VERSION';
+requires 'JSON';
+recommends 'JSON::XS';
+requires 'Mojolicious';
+requires 'Time::HiRes';
 
 on test => sub {
-    requires 'Test::More', '0.88';
+    requires 'Test::More';
+    requires 'Test::Trap';
 };
