@@ -21,29 +21,33 @@ has default_fields => sub {
     };
 };
 
-sub format {
-    my ( $self, $level, @lines ) = @_;
+has format => sub {
+    my $self = shift;
 
-    my %msg = (
-        (   map {
+    return sub {
+        my ( $time, $level, @lines ) = @_;
 
-                my $value = $self->default_fields->{$_};
+        my %msg = (
+            (   map {
 
-                $_ => ref $value eq 'CODE' ? $value->() : $value;
+                    my $value = $self->default_fields->{$_};
 
-            } keys %{ $self->default_fields }
-        ),
+                    $_ => ref $value eq 'CODE' ? $value->() : $value;
 
-        level => $level,
+                } keys %{ $self->default_fields }
+            ),
 
-        ref $lines[0]       # data structure?
-        ? %{ $lines[0] }    #  multiple keys
-        : ( message => join( "\n", @lines ) ),    # single 'message' key
+            level => $level,
 
-    );
+            ref $lines[0]       # data structure?
+            ? %{ $lines[0] }    #  multiple keys
+            : ( message => join( "\n", @lines ) ),    # single 'message' key
 
-    return $self->codec->encode( \%msg ) . "\n";
-}
+        );
+
+        return $self->codec->encode( \%msg ) . "\n";
+    };
+};
 
 1;
 
