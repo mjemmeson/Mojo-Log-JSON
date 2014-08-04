@@ -2,5 +2,7 @@ Revision history for Mojo-Log-JSON
 
 {{$NEXT}}
 
+ - BUGFIX: Updated to work with Mojolicious 5.0+ only (big changes to Mojo::Log)
+
 0.01  2014-04-10 15:10:02 BST
-        - Initial release
+ - Initial release
