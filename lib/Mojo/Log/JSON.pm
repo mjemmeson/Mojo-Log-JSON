@@ -75,19 +75,18 @@ Mojo::Log::JSON - Simple JSON logger
         },
     );
 
-    # To add extra default field
+    # To add an extra default field
     $logger->default_fields->{foo} = "bar";
 
     # Log messages - debug, info, warn, error, fatal (same as Mojo::Log)
-
-    $log->debug( "A simple string" );
-    $log->debug( "A", "message", "over", "multiple", "lines" );
-    $log->debug( { message => "A data structure", foo => "bar" } );
+    $logger->debug( "A simple string" );
+    $logger->debug( "A", "message", "over", "multiple", "lines" );
+    $logger->debug( { message => "A data structure", abc => "123" } );
 
     # The above examples would generate something like the following:
-    {"datetime":"2014-03-13 13:15:44","level":"debug","message":"A simple string"}
-    {"datetime":"2014-03-13 13:15:45","level":"debug","message":"A\nmessage\nover\nmultiple\nlines"}
-    {"datetime":"2014-03-13 13:15:46","foo":"bar","level":"debug","message":"A data structure"}
+    {"datetime":"2014-03-13 13:15:44","foo":"bar","level":"debug","message":"A simple string"}
+    {"datetime":"2014-03-13 13:15:45","foo":"bar","level":"debug","message":"A\nmessage\nover\nmultiple\nlines"}
+    {"datetime":"2014-03-13 13:15:46","abc":"123","foo":"bar","level":"debug","message":"A data structure"}
 
 =head1 DESCRIPTION
 
@@ -148,6 +147,16 @@ L<https://github.com/mjemmeson/mojo-log-json>
 =head1 AUTHOR
 
 Michael Jemmeson E<lt>mjemmeson@cpan.orgE<gt>
+
+=head1 CONTRIBUTORS
+
+=over
+
+=item *
+
+Tom Hukins (CPAN: TOMHUKINS)
+
+=back
 
 =head1 COPYRIGHT
 
