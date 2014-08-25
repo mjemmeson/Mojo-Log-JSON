@@ -47,8 +47,8 @@
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0",
-            "Test::Trap" : "0"
+            "Capture::Tiny" : "0",
+            "Test::More" : "0"
          }
       }
    },
