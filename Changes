@@ -2,7 +2,12 @@ Revision history for Mojo-Log-JSON
 
 {{$NEXT}}
 
- - MAINTENANCE: Added CONTRIBUTORS to POD
+ [Features]
+ - Add include_level option to toggle level key in output
+ 
+ [Maintenance]
+ - Added CONTRIBUTORS to POD
+ - Added more tests (default_fields and include_level)
 
 0.02  2014-08-04 12:14:04 BST
 
