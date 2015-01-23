@@ -4,7 +4,7 @@
       "Michael Jemmeson <mjemmeson@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Milla version v1.0.5, Dist::Zilla version 5.015, CPAN::Meta::Converter version 2.141170",
+   "generated_by" : "Dist::Zilla version 5.025, Dist::Milla version v1.0.5, CPAN::Meta::Converter version 2.143240",
    "license" : [
       "perl_5"
    ],
@@ -26,7 +26,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "Module::Build::Tiny" : "0.036"
+            "Module::Build::Tiny" : "0.039"
          }
       },
       "develop" : {
@@ -64,6 +64,9 @@
          "web" : "https://github.com/mjemmeson/Mojo-Log-JSON"
       }
    },
-   "version" : "0.02"
+   "version" : "0.03",
+   "x_contributors" : [
+      "Tom Hukins <tom@eborcom.com>"
+   ]
 }
 
