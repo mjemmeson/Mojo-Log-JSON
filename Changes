@@ -8,6 +8,7 @@ Revision history for Mojo-Log-JSON
  [Maintenance]
  - Added CONTRIBUTORS to POD
  - Added more tests (default_fields and include_level)
+ - Switched from Test::Trap to Capture::Tiny (Issue #2)
 
 0.02  2014-08-04 12:14:04 BST
 
