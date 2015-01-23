@@ -8,6 +8,8 @@ our $VERSION = '0.02';
 
 has codec => sub { JSON->new->indent(0)->utf8->canonical };
 
+has include_level => 1;
+
 has default_fields => sub {
     {   datetime => sub {
 
@@ -37,13 +39,13 @@ has format => sub {
                 } keys %{ $self->default_fields }
             ),
 
-            level => $level,
-
             ref $lines[0]       # data structure?
             ? %{ $lines[0] }    #  multiple keys
             : ( message => join( "\n", @lines ) ),    # single 'message' key
 
         );
+
+        $msg{level} = $level if $self->include_level;
 
         return $self->codec->encode( \%msg ) . "\n";
     };
@@ -70,9 +72,11 @@ Mojo::Log::JSON - Simple JSON logger
     my $logger = Mojo::Log::JSON->new(    #
         path           => '/var/log/mojo.log',
         level          => 'warn',
-        default_fields => {                      #
-            datetime => sub { time2iso() },      # default added to log
+        default_fields => {                      # default fields added to log
+            app_name => "MyApp",                 # either scalar
+            random_thing => sub { rand() },      # or codref,
         },
+        include_level => 1,    # default - include 'level' key in output
     );
 
     # To add an extra default field
@@ -88,6 +92,10 @@ Mojo::Log::JSON - Simple JSON logger
     {"datetime":"2014-03-13 13:15:45","foo":"bar","level":"debug","message":"A\nmessage\nover\nmultiple\nlines"}
     {"datetime":"2014-03-13 13:15:46","abc":"123","foo":"bar","level":"debug","message":"A data structure"}
 
+    # To not include 'level' set an undefined default_fields key either in the
+    # constructure or as follows:
+    $logger->default_fields->{level} = undef;
+
 =head1 DESCRIPTION
 
 L<Mojo::Log::JSON> is a simple JSON logger for L<Mojo> projects. It logs a
@@ -95,7 +103,8 @@ JSON object (hashref) per log message. Each object occupies a single line to
 allow easy parsing of the log output.
 
 The key C<level> is always added to the data structure, with the value set to
-the level of the log message being emitted.
+the level of the log message being emitted. To omit this, set C<include_level>
+to a false value.
 
 By default the key C<datetime> is also added to the data structure with a value
 of the current time in ISO 8601 format. This can be removed or other fields can
