@@ -2,11 +2,12 @@ package Mojo::Log::JSON;
 
 use Mojo::Base 'Mojo::Log';
 
-use JSON;
-
 our $VERSION = '0.03';
 
-has codec => sub { JSON->new->indent(0)->utf8->canonical };
+has codec => sub {
+    require JSON::MaybeXS;
+    JSON::MaybeXS->new->indent(0)->utf8->canonical;
+};
 
 has include_level => 1;
 
