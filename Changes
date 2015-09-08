@@ -2,6 +2,8 @@ Revision history for Mojo-Log-JSON
 
 {{$NEXT}}
 
+0.04  2015-09-08 15:16:16 BST
+
  [Enhancements]
  - Uses JSON::MaybeXS instead of JSON to load appropriate JSON package
 

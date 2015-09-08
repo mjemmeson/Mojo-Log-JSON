@@ -4,7 +4,7 @@ use Mojo::Base 'Mojo::Log::JSON';
 
 use Time::HiRes qw/ gettimeofday /;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 has default_fields => sub {
     {   '@version'   => 1,

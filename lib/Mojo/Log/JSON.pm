@@ -2,7 +2,7 @@ package Mojo::Log::JSON;
 
 use Mojo::Base 'Mojo::Log';
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 has codec => sub {
     require JSON::MaybeXS;
