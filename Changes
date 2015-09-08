@@ -2,6 +2,12 @@ Revision history for Mojo-Log-JSON
 
 {{$NEXT}}
 
+ [Enhancements]
+ - Uses JSON::MaybeXS instead of JSON to load appropriate JSON package
+
+ [Bug Fixes]
+ - No longer loads JSON module(s) when using codec argument
+
 0.03  2015-01-23 14:55:17 GMT
 
  [Features]
